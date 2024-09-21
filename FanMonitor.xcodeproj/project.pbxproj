@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		E7A0CD7B2C9F518900869E01 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7A0CD7A2C9F518900869E01 /* IOKit.framework */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		E7A0CD042C9F2B8100869E01 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -27,6 +31,8 @@
 		E7A0CCF22C9F2B7F00869E01 /* FanMonitor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FanMonitor.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E7A0CD032C9F2B8100869E01 /* FanMonitorTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FanMonitorTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E7A0CD0D2C9F2B8100869E01 /* FanMonitorUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FanMonitorUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		E7A0CD7A2C9F518900869E01 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
+		E7A0CD7D2C9F51E000869E01 /* FanMonitor.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = FanMonitor.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -65,6 +71,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E7A0CD7B2C9F518900869E01 /* IOKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -88,9 +95,11 @@
 		E7A0CCE92C9F2B7F00869E01 = {
 			isa = PBXGroup;
 			children = (
+				E7A0CD7D2C9F51E000869E01 /* FanMonitor.entitlements */,
 				E7A0CCF42C9F2B7F00869E01 /* FanMonitor */,
 				E7A0CD062C9F2B8100869E01 /* FanMonitorTests */,
 				E7A0CD102C9F2B8100869E01 /* FanMonitorUITests */,
+				E7A0CD792C9F518900869E01 /* Frameworks */,
 				E7A0CCF32C9F2B7F00869E01 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -103,6 +112,14 @@
 				E7A0CD0D2C9F2B8100869E01 /* FanMonitorUITests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		E7A0CD792C9F518900869E01 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				E7A0CD7A2C9F518900869E01 /* IOKit.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -410,6 +427,8 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"FanMonitor/Preview Content\"";
+				DEVELOPMENT_TEAM = 7RULPVKNXT;
+				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FanMonitor/Info.plist;
@@ -436,6 +455,8 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"FanMonitor/Preview Content\"";
+				DEVELOPMENT_TEAM = 7RULPVKNXT;
+				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FanMonitor/Info.plist;
