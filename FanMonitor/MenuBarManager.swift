@@ -1,12 +1,14 @@
 import Cocoa
+import SwiftUI
 
 class MenuBarManager {
     private var statusItem: NSStatusItem?
-    private let fanMonitor = FanMonitor()
-    private var fanView: FanView?
+    private let fanMonitor: FanMonitor
+    private var fanIconView: FanIconView?
     private var menu: NSMenu?
     
-    init() {
+    init(fanMonitor: FanMonitor = FanMonitor()) {
+        self.fanMonitor = fanMonitor
         setupMenuBar()
         setupFanMonitor()
     }
@@ -16,14 +18,21 @@ class MenuBarManager {
         
         if let button = statusItem?.button {
             let buttonFrame = button.frame
-            let fanViewSize: CGFloat = min(buttonFrame.width, buttonFrame.height) - 2
-            let fanViewFrame = CGRect(x: (buttonFrame.width - fanViewSize) / 2,
-                                      y: (buttonFrame.height - fanViewSize) / 2,
-                                      width: fanViewSize,
-                                      height: fanViewSize)
+            let iconSize: CGFloat = min(buttonFrame.width, buttonFrame.height) - 4
             
-            fanView = FanView(frame: fanViewFrame)
-            button.addSubview(fanView!)
+            fanIconView = FanIconView(frame: NSRect(x: 0, y: 0, width: iconSize, height: iconSize))
+            fanIconView?.updateIcon(for: .off)
+            
+            button.addSubview(fanIconView!)
+            
+            // Center the fanIconView in the button
+            fanIconView?.translatesAutoresizingMaskIntoConstraints = false
+            NSLayoutConstraint.activate([
+                fanIconView!.centerXAnchor.constraint(equalTo: button.centerXAnchor),
+                fanIconView!.centerYAnchor.constraint(equalTo: button.centerYAnchor),
+                fanIconView!.widthAnchor.constraint(equalToConstant: iconSize),
+                fanIconView!.heightAnchor.constraint(equalToConstant: iconSize)
+            ])
         }
         
         setupMenu()
@@ -73,14 +82,14 @@ class MenuBarManager {
     
     private func updateFanStatus(speed: Int) {
         let fanSpeed = getFanSpeed(for: speed)
-        fanView?.updateColor(for: fanSpeed)
+        fanIconView?.updateIcon(for: fanSpeed)
         updateTooltip(speed: speed)
         updateMenu(speed: speed, status: fanSpeed)
     }
     
     private func updateTooltip(speed: Int) {
         let tooltip = "Fan Speed: \(speed) RPM"
-        fanView?.updateTooltip(tooltip)
+        statusItem?.button?.toolTip = tooltip
     }
     
     private func updateMenu(speed: Int, status: FanSpeed) {
