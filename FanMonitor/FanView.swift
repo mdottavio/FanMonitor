@@ -38,7 +38,7 @@ class FanView: NSView {
         let center = CGPoint(x: bounds.midX, y: bounds.midY)
         let radius = min(bounds.width, bounds.height) / 2 - 2
         let bladeLength = radius * 0.8
-        let bladeWidth = radius * 0.2
+        _ = radius * 0.2
         
         for i in 0..<3 {
             let angle = CGFloat(i) * (2 * .pi / 3)
