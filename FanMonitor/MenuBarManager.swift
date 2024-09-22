@@ -69,13 +69,13 @@ class MenuBarManager {
     
     private func setupFanMonitor() {
         fanMonitor.startMonitoring()
-        NotificationCenter.default.addObserver(self, selector: #selector(fanStatusChanged), name: .fanStatusChanged, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(fanSpeedDidChange), name: .fanSpeedDidChange, object: nil)
     }
     
-    @objc private func fanStatusChanged() {
+    @objc private func fanSpeedDidChange(_ notification: Notification) {
         DispatchQueue.main.async { [weak self] in
-            guard let self = self else { return }
-            let speed = self.fanMonitor.fanSpeed
+            guard let self = self,
+                  let speed = notification.userInfo?["speed"] as? Int else { return }
             self.updateFanStatus(speed: speed)
         }
     }
@@ -88,13 +88,36 @@ class MenuBarManager {
     }
     
     private func updateTooltip(speed: Int) {
-        let tooltip = "Fan Speed: \(speed) RPM"
+        let tooltip: String
+        if speed > 0 {
+            tooltip = "Fan Speed: \(speed) RPM"
+        } else {
+            tooltip = "Fan Speed: Unavailable (Check Permissions)"
+        }
         statusItem?.button?.toolTip = tooltip
     }
     
     private func updateMenu(speed: Int, status: FanSpeed) {
-        menu?.item(at: 0)?.title = "Current Fan Speed: \(speed) RPM"
-        menu?.item(at: 1)?.title = "Fan Status: \(status)"
+        if speed > 0 {
+            menu?.item(at: 0)?.title = "Current Fan Speed: \(speed) RPM"
+            menu?.item(at: 1)?.title = "Fan Status: \(fanSpeedDescription(status))"
+        } else {
+            menu?.item(at: 0)?.title = "Current Fan Speed: Unavailable"
+            menu?.item(at: 1)?.title = "Fan Status: Check Permissions"
+        }
+    }
+    
+    private func fanSpeedDescription(_ speed: FanSpeed) -> String {
+        switch speed {
+        case .off:
+            return "Off"
+        case .low:
+            return "Low"
+        case .medium:
+            return "Medium"
+        case .high:
+            return "High"
+        }
     }
     
     private func getFanSpeed(for speed: Int) -> FanSpeed {
